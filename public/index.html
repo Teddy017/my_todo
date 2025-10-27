@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Modern Todo App</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1 class="logo">Todo App</h1>
+
+    <!-- Authentication Section -->
+    <div id="auth-section" class="card fade">
+      <h2>Welcome</h2>
+      <p>Login or create a new account</p>
+      <input type="text" id="username" placeholder="👤 Username">
+      <input type="password" id="password" placeholder="🔒 Password">
+      <div class="buttons">
+        <button id="loginBtn" class="btn primary">Login</button>
+        <button id="registerBtn" class="btn secondary">Register</button>
+      </div>
+    </div>
+
+    <!-- Todo Section -->
+    <div id="todo-section" class="card hidden fade">
+      <div class="header">
+        <h2>Hi, <span id="user-name"></span> 👋</h2>
+        <button id="logoutBtn" class="btn danger small">Logout</button>
+      </div>
+
+      <div class="todo-input">
+        <input type="text" id="todoInput" placeholder="What do you need to do?">
+        <button id="addTodoBtn" class="btn add">＋</button>
+      </div>
+
+      <ul id="todoList" class="todo-list"></ul>
+    </div>
+  </div>
+
+  <footer>
+    <p>Enjoy</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

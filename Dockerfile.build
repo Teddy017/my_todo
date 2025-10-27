@@ -1,6 +1,0 @@
-# Use a lightweight base image
-FROM alpine:latest AS builder
-
-WORKDIR /app
-COPY src/ ./src/
-RUN mkdir dist && cp -r src/* dist/

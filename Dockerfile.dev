@@ -1,0 +1,29 @@
+# Use a lightweight base image
+FROM alpine:latest AS builder
+
+WORKDIR /app
+COPY src/ ./src/
+RUN mkdir dist && cp -r src/* dist/
+# Dockerfile.dev
+FROM node:18
+
+# Set working directory
+WORKDIR /app
+
+# Copy package files
+COPY package*.json ./
+
+# Install all dependencies (including dev)
+RUN npm install
+
+# Install nodemon globally for live reload
+RUN npm install -g nodemon
+
+# Copy the rest of your app
+COPY . .
+
+# Expose the app port (adjust if different)
+EXPOSE 3000
+
+# Start app with nodemon for development
+CMD ["nodemon", "server.js"]

@@ -1,0 +1,19 @@
+# Dockerfile.prod
+FROM node:18-alpine
+
+WORKDIR /app
+
+# Copy package files first for efficient caching
+COPY package*.json ./
+
+# Install only production dependencies
+RUN npm ci --only=production
+
+# Copy app files
+COPY . .
+
+# Expose the port used in your server.js
+EXPOSE 3000
+
+# Run your Node.js server
+CMD ["node", "server.js"]
