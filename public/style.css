@@ -1,173 +1,359 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
-
 * {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
 body {
-  font-family: 'Poppins', sans-serif;
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  color: #fff;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  height: 100vh;
-  margin: 0;
+  justify-content: center;
+  padding: 20px;
+  position: relative;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+  background-size: 50px 50px;
+  animation: moveBackground 20s linear infinite;
+  z-index: 0;
+}
+
+@keyframes moveBackground {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(50px, 50px); }
+}
+
+.container {
+  width: 100%;
+  max-width: 500px;
+  z-index: 1;
+  position: relative;
 }
 
 .logo {
   text-align: center;
-  font-weight: 600;
-  margin-bottom: 20px;
-  letter-spacing: 1px;
+  color: white;
+  font-size: 3rem;
+  margin-bottom: 30px;
+  text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  animation: fadeInDown 0.6s ease;
+  font-weight: 700;
+  letter-spacing: -1px;
 }
 
-.container {
-  width: 380px;
-  text-align: center;
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .card {
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 20px;
-  padding: 30px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(15px);
-  animation: fadeIn 0.5s ease;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 24px;
+  padding: 40px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: fadeInUp 0.6s ease;
 }
 
-.fade {
-  transition: all 0.4s ease;
-}
-
-input {
-  width: 90%;
-  padding: 12px;
-  margin: 8px 0;
-  border: none;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.2);
-  color: #fff;
-  font-size: 15px;
-  outline: none;
-}
-
-input::placeholder {
-  color: #ddd;
-}
-
-.buttons {
-  margin-top: 10px;
-  display: flex;
-  justify-content: space-around;
-}
-
-.btn {
-  border: none;
-  padding: 10px 20px;
-  border-radius: 10px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.primary {
-  background: #6c63ff;
-  color: #fff;
-}
-.primary:hover {
-  background: #574bdf;
-}
-
-.secondary {
-  background: #38b2ac;
-  color: #fff;
-}
-.secondary:hover {
-  background: #2c7a7b;
-}
-
-.danger {
-  background: #e53e3e;
-}
-.danger:hover {
-  background: #c53030;
-}
-
-.add {
-  background: #48bb78;
-  font-size: 20px;
-  padding: 10px 15px;
-}
-.add:hover {
-  background: #38a169;
-}
-
-.small {
-  font-size: 12px;
-  padding: 6px 12px;
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .hidden {
   display: none;
 }
 
+h2 {
+  color: #333;
+  margin-bottom: 10px;
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+p {
+  color: #666;
+  margin-bottom: 25px;
+  font-size: 0.95rem;
+}
+
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 15px 20px;
+  margin-bottom: 15px;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background: white;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+}
+
+.buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.btn {
+  padding: 14px 28px;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn.primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.btn.secondary {
+  background: #f0f0f0;
+  color: #333;
+}
+
+.btn.secondary:hover {
+  background: #e0e0e0;
+}
+
+.btn.danger {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: white;
+}
+
+.btn.add {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  color: white;
+  padding: 14px 24px;
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.btn.small {
+  padding: 10px 20px;
+  font-size: 0.85rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+#user-name {
+  color: #667eea;
+  font-weight: 700;
+}
+
 .todo-input {
   display: flex;
-  justify-content: center;
-  gap: 8px;
-  margin-bottom: 15px;
+  gap: 12px;
+  margin-bottom: 25px;
+}
+
+.todo-input input {
+  flex: 1;
+  margin-bottom: 0;
 }
 
 .todo-list {
   list-style: none;
-  padding: 0;
-  max-height: 220px;
+  max-height: 400px;
   overflow-y: auto;
 }
 
-.todo-list li {
-  background: rgba(255, 255, 255, 0.2);
-  margin: 8px 0;
-  padding: 10px 12px;
-  border-radius: 12px;
+.todo-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.todo-list::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.todo-list::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 10px;
+}
+
+.todo-item {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  transition: background 0.3s;
+  gap: 12px;
+  padding: 16px;
+  margin-bottom: 12px;
+  background: white;
+  border: 2px solid #f0f0f0;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  animation: slideIn 0.3s ease;
 }
 
-.todo-list li:hover {
-  background: rgba(255, 255, 255, 0.3);
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
-.todo-list li.done {
-  text-decoration: line-through;
+.todo-item:hover {
+  border-color: #667eea;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+}
+
+.todo-item.completed {
   opacity: 0.6;
 }
 
-.todo-list button {
-  background: none;
-  border: none;
-  color: #fff;
-  cursor: pointer;
-  font-size: 16px;
-  margin-left: 5px;
-  transition: transform 0.2s;
+.todo-item.completed .todo-text {
+  text-decoration: line-through;
+  color: #999;
 }
 
-.todo-list button:hover {
-  transform: scale(1.2);
+.checkbox {
+  width: 24px;
+  height: 24px;
+  border: 2px solid #ddd;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.checkbox.checked {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-color: #667eea;
+}
+
+.checkbox.checked::after {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.todo-text {
+  flex: 1;
+  color: #333;
+  font-size: 1rem;
+}
+
+.delete-btn {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  opacity: 0;
+  flex-shrink: 0;
+}
+
+.todo-item:hover .delete-btn {
+  opacity: 1;
+}
+
+.delete-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(245, 87, 108, 0.4);
 }
 
 footer {
-  margin-top: 25px;
-  font-size: 13px;
-  opacity: 0.8;
+  margin-top: 30px;
+  text-align: center;
+  color: white;
+  font-size: 0.9rem;
+  z-index: 1;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(15px); }
-  to { opacity: 1; transform: translateY(0); }
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #999;
+}
+
+.empty-state::before {
+  content: '📝';
+  display: block;
+  font-size: 4rem;
+  margin-bottom: 20px;
+  opacity: 0.5;
+}
+
+@media (max-width: 600px) {
+  .logo {
+    font-size: 2.2rem;
+  }
+
+  .card {
+    padding: 30px 25px;
+  }
+
+  .buttons {
+    flex-direction: column;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
 }

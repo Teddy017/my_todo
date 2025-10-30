@@ -75,4 +75,10 @@ app.delete("/todos/:id", verifyToken, (req, res) => {
   res.json({ message: "Deleted successfully" });
 });
 
-app.listen(3000, () => console.log("✅ Server running on http://localhost:3000"));
+const PORT = 3000;
+
+if (require.main === module) {
+  app.listen(PORT, () => console.log(`✅ Server running on http://localhost:${PORT}`));
+}
+
+module.exports = app;
