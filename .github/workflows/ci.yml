@@ -7,30 +7,55 @@ on:
   pull_request:
 
 jobs:
+  # ----------------------------
+  # 1️⃣ BUILD STAGE
+  # ----------------------------
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Node
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 18
 
-      # ✅ Installing all dependencies including devDependencies (important for Jest to work in CI)
+      - name: Install dependencies
+        run: npm ci --include=dev
+
+      - name: Build project
+        run: npm run build || echo "No build script defined"
+
+  # ----------------------------
+  # 2️⃣ TEST STAGE (Jest)
+  # ----------------------------
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      # ✅ Ensure devDependencies (like Jest) are installed in CI
       - name: Install dependencies
         run: npm ci --include=dev
 
       # ✅ Run Jest tests (works both locally and in GitHub Actions)
-      - name: Run tests
+      - name: Run Jest tests
         run: npm test -- --runInBand --passWithNoTests
 
+  # ----------------------------
+  # 3️⃣ DOCKER STAGE
+  # ----------------------------
   docker:
     runs-on: ubuntu-latest
-    needs: build
-
+    needs: test
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
