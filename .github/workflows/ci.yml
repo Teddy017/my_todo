@@ -19,11 +19,13 @@ jobs:
         with:
           node-version: 18
 
+      # ✅ Installing all dependencies including devDependencies (important for Jest to work in CI)
       - name: Install dependencies
-        run: npm install
+        run: npm ci --include=dev
 
+      # ✅ Run Jest tests (works both locally and in GitHub Actions)
       - name: Run tests
-        run: npm test || echo "No tests found"
+        run: npm test -- --runInBand --passWithNoTests
 
   docker:
     runs-on: ubuntu-latest
