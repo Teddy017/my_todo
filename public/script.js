@@ -15,10 +15,7 @@ const themeSwitch = document.getElementById("themeSwitch");
 document.getElementById("registerBtn").addEventListener("click", async () => {
   const username = usernameInput.value.trim();
   const password = passwordInput.value.trim();
-  if (!username || !password) {
-    alert("Please provide username and password.");
-    return;
-  }
+  if (!username || !password) return alert("Please provide username and password.");
 
   try {
     const res = await fetch(`${API}/register`, {
@@ -37,10 +34,7 @@ document.getElementById("registerBtn").addEventListener("click", async () => {
 document.getElementById("loginBtn").addEventListener("click", async () => {
   const username = usernameInput.value.trim();
   const password = passwordInput.value.trim();
-  if (!username || !password) {
-    alert("Please provide username and password.");
-    return;
-  }
+  if (!username || !password) return alert("Please provide username and password.");
 
   try {
     const res = await fetch(`${API}/login`, {
@@ -52,7 +46,7 @@ document.getElementById("loginBtn").addEventListener("click", async () => {
     if (data.token) {
       localStorage.setItem(tokenKey, data.token);
       showTodoSection(username);
-      await loadTodos(); // initial load
+      await loadTodos();
     } else {
       alert(data.message || "Login failed");
     }
@@ -86,12 +80,10 @@ document.getElementById("addTodoBtn").addEventListener("click", async () => {
     });
 
     if (!res.ok) throw new Error("Failed to add todo");
-    const newTodo = await res.json(); // backend should return created todo with id
+    const newTodo = await res.json();
 
     todoInput.value = "";
-
-    // Append new todo without reloading the whole list
-    appendTodoToList(newTodo);
+    appendTodoToList(newTodo); // Append without reloading old todos
 
   } catch (err) {
     console.error(err);
@@ -122,20 +114,18 @@ async function loadTodos() {
 
 // Append single todo to list
 function appendTodoToList(t) {
-  // Prevent duplicate todos in UI
   if (document.querySelector(`li[data-id='${t.id}']`)) return;
 
   const li = document.createElement("li");
   li.dataset.id = t.id;
-  if (t.done) li.classList.add("done");
+  li.classList.toggle("done", t.done);
 
-  // todo text container
   const textWrap = document.createElement("div");
   textWrap.className = "todo-text";
 
   const checkbox = document.createElement("input");
   checkbox.type = "checkbox";
-  checkbox.checked = !!t.done;
+  checkbox.checked = t.done;
 
   const span = document.createElement("span");
   span.textContent = t.text;
@@ -144,7 +134,7 @@ function appendTodoToList(t) {
     li.classList.toggle("done", checkbox.checked);
     try {
       await toggleDone(t.id, checkbox.checked);
-      t.done = checkbox.checked; // persist local state
+      t.done = checkbox.checked; // persist locally
     } catch (err) {
       console.error(err);
       checkbox.checked = !checkbox.checked;
@@ -156,7 +146,6 @@ function appendTodoToList(t) {
   textWrap.appendChild(checkbox);
   textWrap.appendChild(span);
 
-  // actions
   const actions = document.createElement("div");
   actions.className = "todo-actions";
 
@@ -170,7 +159,7 @@ function appendTodoToList(t) {
     try {
       await editTodoRequest(t.id, newText.trim());
       span.textContent = newText.trim();
-      t.text = newText.trim(); // update local copy
+      t.text = newText.trim();
     } catch (err) {
       console.error(err);
       alert("Failed to edit todo.");
@@ -197,7 +186,6 @@ function appendTodoToList(t) {
 
   li.appendChild(textWrap);
   li.appendChild(actions);
-
   todoList.appendChild(li);
 }
 

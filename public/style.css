@@ -5,9 +5,8 @@
 
 body {
   font-family: "Poppins", sans-serif;
-  /* ONE PIECE VIBE: Deep Sea/Adventure Blue */
-  background: linear-gradient(135deg, #001f3f 0%, #0074b8 100%); 
-  color: #f0f8ff; /* Light, contrasting text color for the dark background */
+  background: linear-gradient(135deg, #001f3f 0%, #0074b8 100%);
+  color: #f0f8ff;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -21,27 +20,23 @@ body {
 .app-container {
   width: 90%;
   max-width: 420px;
-  /* Reduced transparency for better contrast against the dark background */
-  background: rgba(255, 255, 255, 0.95); 
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(5px);
   border-radius: 16px;
   padding: 30px 25px;
-  /* Stronger shadow for depth */
-  box-shadow: 0 10px 50px rgba(0, 0, 0, 0.4); 
+  box-shadow: 0 10px 50px rgba(0, 0, 0, 0.4);
   text-align: center;
   transition: 0.4s;
-  color: #222; /* Ensure dark text inside the light container */
-  /* Added a pirate gold border */
-  border: 3px solid #ffc107; 
+  color: #222;
+  border: 3px solid #ffc107;
 }
 
 .app-title {
-  font-weight: 800; /* Extra bold */
+  font-weight: 800;
   font-size: 2.2rem;
   margin-bottom: 15px;
-  color: #e63946; /* STRAW HAT RED for the title */
-  /* Added a slight shadow for a dramatic feel */
-  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1); 
+  color: #e63946;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
 }
 
 /* ---------- CARD ---------- */
@@ -59,9 +54,8 @@ input {
   padding: 12px;
   margin: 8px 0;
   border-radius: 8px;
-  /* Cleaner, more solid input fields */
-  border: 1px solid #ffc107; 
-  background: #fdfdff; 
+  border: 1px solid #ffc107;
+  background: #fdfdff;
   color: #222;
   outline: none;
   font-size: 15px;
@@ -69,8 +63,7 @@ input {
 }
 
 input:focus {
-  /* Highlight focus with a light blue similar to Nami/Sanji */
-  background: #e0f7fa; 
+  background: #e0f7fa;
   box-shadow: 0 0 6px rgba(0, 191, 255, 0.5);
 }
 
@@ -90,9 +83,8 @@ button:hover {
 }
 
 .btn.primary {
-  /* ONE PIECE THEME: HAKI/GEAR YELLOW/GOLD */
-  background: #ffc107; 
-  color: #e63946; /* Text is Straw Hat Red */
+  background: #ffc107;
+  color: #e63946;
 }
 
 .btn.secondary {
@@ -100,16 +92,14 @@ button:hover {
 }
 
 .btn.logout {
-  /* Marine/Danger Blue for a clean sign-out */
-  background: #0077b6; 
+  background: #0077b6;
   color: white;
   font-size: 0.8rem;
   padding: 8px 14px;
 }
 
 .btn.add {
-  /* LUFFY'S RED SHIRT/CAP */
-  background: #e63946; 
+  background: #e63946;
   color: white;
   padding: 10px 15px;
   font-size: 1.2rem;
@@ -148,16 +138,14 @@ button:hover {
 }
 
 .todo-list li {
-  /* Solid background for readability */
-  background: #fff; 
+  background: #fff;
   border-radius: 10px;
   padding: 10px 12px;
   margin: 8px 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* Subtle light blue/cyan border for detail */
-  border-left: 5px solid #00bfff; 
+  border-left: 5px solid #00bfff;
   transition: background 0.3s, color 0.3s;
   animation: fadeIn 0.4s ease;
 }
@@ -166,7 +154,7 @@ button:hover {
   background: #f0f8ff;
 }
 
-/* Checkbox styling */
+/* ---------- TODO CHECKBOX ---------- */
 .todo-text {
   display: flex;
   align-items: center;
@@ -176,21 +164,19 @@ button:hover {
 .todo-text input[type="checkbox"] {
   width: 18px;
   height: 18px;
-  /* ZORO GREEN for task completion */
-  accent-color: #4c9e4c; 
+  accent-color: #4c9e4c;
   cursor: pointer;
 }
 
-/* ✅ Completed todo look */
+/* ✅ Completed todo */
 .todo-list li.done {
-  /* Lighter background for completed tasks */
-  background: #e8f5e9; 
-  border-left: 5px solid #4c9e4c; /* Solid green completion border */
+  background: #e8f5e9;
+  border-left: 5px solid #4c9e4c;
 }
 
 .todo-list li.done .todo-text span {
   text-decoration: line-through;
-  color: #387638; 
+  color: #387638;
   font-weight: 600;
 }
 
@@ -217,61 +203,57 @@ button:hover {
 }
 
 .edit-btn {
-  /* NAMI/SANJI BLUE */
-  color: #00bfff; 
+  color: #00bfff;
 }
 
 .delete-btn {
-  /* Magma/Danger Red */
-  color: #e63946; 
+  color: #e63946;
 }
 
 /* ---------- USERNAME DISPLAY ---------- */
 #user-name {
-  font-weight: 700; 
-  color: #ffc107; /* Gold/Yellow */
+  font-weight: 700;
+  color: #ffc107;
   font-size: 1.1rem;
 }
 
 /* ---------- FOOTER ---------- */
 footer {
   margin-top: 20px;
-  /* White text against the dark body background */
-  color: #fff; 
+  color: #fff;
   font-size: 0.9rem;
   font-weight: 500;
 }
 
 footer span {
-  /* RED HEART */
-  color: #e63946; 
+  color: #e63946;
 }
 
-/* ---------- DARK MODE (Deep Space/New World) ---------- */
+/* ---------- DARK MODE ---------- */
 body.dark {
   background: linear-gradient(135deg, #000000 0%, #0a0a2a 100%);
   color: #f0f8ff;
 }
 
 body.dark .app-container {
-  background: rgba(10, 10, 42, 0.85); /* Darker container */
+  background: rgba(10, 10, 42, 0.85);
   color: #eee;
   border: 3px solid #ffc107;
 }
 
 body.dark .app-title {
-  color: #ffc107; /* Gold title in dark mode */
+  color: #ffc107;
 }
 
 body.dark input {
   background: #1a1a3a;
-  border: 1px solid #00bfff; /* Light blue border */
+  border: 1px solid #00bfff;
   color: #eee;
 }
 
 body.dark .todo-list li {
   background: #1a1a3a;
-  border-left: 5px solid #4c9e4c; /* Green border for tasks */
+  border-left: 5px solid #4c9e4c;
   color: #eee;
 }
 
@@ -280,7 +262,7 @@ body.dark .todo-list li:hover {
 }
 
 body.dark .todo-list li.done {
-  background: #2a3a2a; 
+  background: #2a3a2a;
   border-left: 5px solid #4c9e4c;
 }
 
@@ -334,8 +316,7 @@ body.dark footer {
 }
 
 input:checked + .slider {
-  /* Bright Blue toggle */
-  background-color: #00bfff; 
+  background-color: #00bfff;
 }
 
 input:checked + .slider:before {
@@ -348,8 +329,7 @@ input:checked + .slider:before {
 }
 
 ::-webkit-scrollbar-thumb {
-  /* STRAW HAT YELLOW for the scrollbar */
-  background-color: rgba(255, 193, 7, 0.7); 
+  background-color: rgba(255, 193, 7, 0.7);
   border-radius: 3px;
 }
 

@@ -1,5 +1,5 @@
 const request = require("supertest");
-const app = require("../server"); // Make sure server.js exports the app, not app.listen()
+const app = require("../server"); // Make sure server.js exports app, not app.listen()
 
 let token = "";
 
@@ -26,7 +26,7 @@ describe("Todo API", () => {
     const res = await request(app)
       .post("/todos")
       .set("Authorization", `Bearer ${token}`)
-      .send({ text: "Buy milk" }); // Use 'text', not 'title'
+      .send({ text: "Buy milk" }); // 'text' key matches server.js
     expect(res.statusCode).toBe(200);
     expect(res.body.text).toBe("Buy milk");
     expect(res.body.done).toBe(false);
@@ -87,4 +87,3 @@ describe("Todo API", () => {
     expect(deleteRes.body.message).toBe("Deleted successfully");
   });
 });
-

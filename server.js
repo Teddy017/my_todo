@@ -9,7 +9,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 const SECRET_KEY = "super_secret_key";
 
-// In-memory data storage
+// -------------------- In-memory storage --------------------
 const users = [];
 const todos = [];
 
@@ -51,44 +51,34 @@ function verifyToken(req, res, next) {
   });
 }
 
-// -------------------- ADD TODO --------------------
+// -------------------- TODOS ROUTES --------------------
+
+// Create new todo
 app.post("/todos", verifyToken, (req, res) => {
-  const { text } = req.body;
+  const { text, done = false } = req.body;
   if (!text) return res.status(400).json({ message: "Todo text is required" });
 
   const newTodo = {
     id: Date.now(),
     username: req.user.username,
     text,
-    done: false,
+    done,
   };
   todos.push(newTodo);
   res.json(newTodo);
 });
 
-// -------------------- GET USER TODOS --------------------
+// Get user todos
 app.get("/todos", verifyToken, (req, res) => {
   const userTodos = todos.filter(t => t.username === req.user.username);
   res.json(userTodos);
 });
 
-// -------------------- TOGGLE TODO STATUS (optional, can keep) --------------------
-app.put("/todos/:id/toggle", verifyToken, (req, res) => {
-  const todo = todos.find(t => t.id === parseInt(req.params.id));
-  if (!todo) return res.status(404).json({ message: "Todo not found" });
-  if (todo.username !== req.user.username)
-    return res.status(403).json({ message: "Not authorized" });
-
-  todo.done = !todo.done;
-  res.json(todo);
-});
-
-// -------------------- EDIT TODO TEXT & DONE --------------------
+// Toggle todo done
 app.put("/todos/:id", verifyToken, (req, res) => {
   const todo = todos.find(t => t.id === parseInt(req.params.id));
   if (!todo) return res.status(404).json({ message: "Todo not found" });
-  if (todo.username !== req.user.username)
-    return res.status(403).json({ message: "Not authorized" });
+  if (todo.username !== req.user.username) return res.status(403).json({ message: "Not authorized" });
 
   const { text, done } = req.body;
   if (text !== undefined) todo.text = text;
@@ -97,18 +87,17 @@ app.put("/todos/:id", verifyToken, (req, res) => {
   res.json(todo);
 });
 
-// -------------------- DELETE TODO --------------------
+// Delete todo
 app.delete("/todos/:id", verifyToken, (req, res) => {
   const index = todos.findIndex(t => t.id === parseInt(req.params.id));
   if (index === -1) return res.status(404).json({ message: "Todo not found" });
-  if (todos[index].username !== req.user.username)
-    return res.status(403).json({ message: "Not authorized" });
+  if (todos[index].username !== req.user.username) return res.status(403).json({ message: "Not authorized" });
 
   todos.splice(index, 1);
   res.json({ message: "Deleted successfully" });
 });
 
-// -------------------- SERVER START --------------------
+// -------------------- START SERVER --------------------
 const PORT = 3000;
 if (require.main === module) {
   app.listen(PORT, () => console.log(`✅ Server running on http://localhost:${PORT}`));
