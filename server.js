@@ -8,33 +8,42 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "public")));
 
 const SECRET_KEY = "super_secret_key";
+
+// In-memory data storage
 const users = [];
 const todos = [];
 
-// Register
+// -------------------- REGISTER --------------------
 app.post("/register", (req, res) => {
   const { username, password } = req.body;
+
+  if (!username || !password)
+    return res.status(400).json({ message: "Username and password are required" });
+
   if (users.find(u => u.username === username))
     return res.status(400).json({ message: "Username already exists" });
+
   users.push({ username, password });
   res.json({ message: "User registered successfully" });
 });
 
-// Login
+// -------------------- LOGIN --------------------
 app.post("/login", (req, res) => {
   const { username, password } = req.body;
+
   const user = users.find(u => u.username === username && u.password === password);
   if (!user) return res.status(401).json({ message: "Invalid credentials" });
+
   const token = jwt.sign({ username }, SECRET_KEY, { expiresIn: "1h" });
   res.json({ token });
 });
 
-// Middleware
+// -------------------- AUTH MIDDLEWARE --------------------
 function verifyToken(req, res, next) {
-  const bearerHeader = req.headers["authorization"];
-  if (!bearerHeader) return res.status(403).json({ message: "No token provided" });
+  const authHeader = req.headers["authorization"];
+  if (!authHeader) return res.status(403).json({ message: "No token provided" });
 
-  const token = bearerHeader.split(" ")[1];
+  const token = authHeader.split(" ")[1];
   jwt.verify(token, SECRET_KEY, (err, decoded) => {
     if (err) return res.status(401).json({ message: "Invalid or expired token" });
     req.user = decoded;
@@ -42,41 +51,65 @@ function verifyToken(req, res, next) {
   });
 }
 
-// Add Todo
+// -------------------- ADD TODO --------------------
 app.post("/todos", verifyToken, (req, res) => {
-  const { title } = req.body;
-  const todo = { id: todos.length + 1, username: req.user.username, title, done: false };
-  todos.push(todo);
+  const { text } = req.body;
+  if (!text) return res.status(400).json({ message: "Todo text is required" });
+
+  const newTodo = {
+    id: Date.now(),
+    username: req.user.username,
+    text,
+    done: false,
+  };
+  todos.push(newTodo);
+  res.json(newTodo);
+});
+
+// -------------------- GET USER TODOS --------------------
+app.get("/todos", verifyToken, (req, res) => {
+  const userTodos = todos.filter(t => t.username === req.user.username);
+  res.json(userTodos);
+});
+
+// -------------------- TOGGLE TODO STATUS (optional, can keep) --------------------
+app.put("/todos/:id/toggle", verifyToken, (req, res) => {
+  const todo = todos.find(t => t.id === parseInt(req.params.id));
+  if (!todo) return res.status(404).json({ message: "Todo not found" });
+  if (todo.username !== req.user.username)
+    return res.status(403).json({ message: "Not authorized" });
+
+  todo.done = !todo.done;
   res.json(todo);
 });
 
-// Get Todos
-app.get("/todos", verifyToken, (req, res) => {
-  res.json(todos.filter(t => t.username === req.user.username));
-});
-
-// Mark done
+// -------------------- EDIT TODO TEXT & DONE --------------------
 app.put("/todos/:id", verifyToken, (req, res) => {
   const todo = todos.find(t => t.id === parseInt(req.params.id));
   if (!todo) return res.status(404).json({ message: "Todo not found" });
   if (todo.username !== req.user.username)
     return res.status(403).json({ message: "Not authorized" });
-  todo.done = !todo.done;
+
+  const { text, done } = req.body;
+  if (text !== undefined) todo.text = text;
+  if (done !== undefined) todo.done = done;
+
   res.json(todo);
 });
 
-// Delete
+// -------------------- DELETE TODO --------------------
 app.delete("/todos/:id", verifyToken, (req, res) => {
   const index = todos.findIndex(t => t.id === parseInt(req.params.id));
   if (index === -1) return res.status(404).json({ message: "Todo not found" });
   if (todos[index].username !== req.user.username)
     return res.status(403).json({ message: "Not authorized" });
+
   todos.splice(index, 1);
   res.json({ message: "Deleted successfully" });
 });
 
+// -------------------- SERVER START --------------------
 const PORT = 3000;
-
 if (require.main === module) {
   app.listen(PORT, () => console.log(`✅ Server running on http://localhost:${PORT}`));
 }

@@ -1,35 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Modern Todo App</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
 </head>
 <body>
-  <div class="container">
-    <h1 class="logo">Todo App</h1>
+  <div class="theme-toggle">
+    <label class="switch">
+      <input type="checkbox" id="themeSwitch">
+      <span class="slider"></span>
+    </label>
+  </div>
 
-    <!-- Authentication Section -->
+  <div class="app-container">
+    <h1 class="app-title">Gum-Gum List</h1>
+
+    <!-- Auth Section -->
     <div id="auth-section" class="card fade">
-      <h2>Welcome</h2>
-      <p>Login or create a new account</p>
-      <input type="text" id="username" placeholder="👤 Username">
-      <input type="password" id="password" placeholder="🔒 Password">
-      <div class="buttons">
+      <h2>Welcome Back</h2>
+      <p class="subtitle">Login or create a new account</p>
+      <input id="username" placeholder="👤 Username" />
+      <input id="password" type="password" placeholder="🔒 Password" />
+      <div class="button-group">
         <button id="loginBtn" class="btn primary">Login</button>
         <button id="registerBtn" class="btn secondary">Register</button>
       </div>
     </div>
 
     <!-- Todo Section -->
-    <div id="todo-section" class="card hidden fade">
-      <div class="header">
-        <h2>Hi, <span id="user-name"></span> 👋</h2>
-        <button id="logoutBtn" class="btn danger small">Logout</button>
+    <div id="todo-section" class="card fade hidden">
+      <div class="todo-header">
+        <h2>Hello, <span id="user-name"></span> 👋</h2>
+        <button id="logoutBtn" class="btn logout">Logout</button>
       </div>
 
       <div class="todo-input">
-        <input type="text" id="todoInput" placeholder="What do you need to do?">
+        <input id="todoInput" placeholder="✏️ Add a new task..." />
         <button id="addTodoBtn" class="btn add">＋</button>
       </div>
 
@@ -38,7 +47,7 @@
   </div>
 
   <footer>
-    <p>Enjoy</p>
+    <p>⚔️ Unleash your Haki. The Grand Line awaits! 🏴‍☠️</p>
   </footer>
 
   <script src="script.js"></script>
